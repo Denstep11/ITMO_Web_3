@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <link rel="stylesheet" type="text/css" href="style_main.css"/>
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+    <title>Лабораторная №2</title>
+</h:head>
+<h:body>
+    <table width="1000" cellspacing="4" class="main">
+        <tr>
+            <td  colspan="2" id="shapka"><h3 class="shapka">Баранов Денис Владимирович P32091 Вариант№122143 </h3></td>
+        </tr>
+        <tr>
+            <td align="center" class="coordin">
+                <canvas id="example" width="300" height="300"></canvas>
+            </td>
+            <td class="shapka">
+                <h:form method="GET" name="coor_form" class="forma" id="mainForm">
+                    <h4 class="form">Введите координаты X:</h4>
+                    <h:selectOneMenu value = "#{coordinates.coordinateX}"  style="width:125px" id="inputX">
+                        <f:selectItem itemValue = "-3" itemLabel = "-3" />
+                        <f:selectItem itemValue = "-2" itemLabel = "-2" />
+                        <f:selectItem itemValue = "-1" itemLabel = "-1" />
+                        <f:selectItem itemValue = "0" itemLabel = "0" />
+                        <f:selectItem itemValue = "1" itemLabel = "1" />
+                        <f:selectItem itemValue = "2" itemLabel = "2" />
+                        <f:selectItem itemValue = "3" itemLabel = "3" />
+                        <f:selectItem itemValue = "4" itemLabel = "4" />
+                        <f:selectItem itemValue = "5" itemLabel = "5" />
+                        <f:converter converterId="NumberConverter"/>
+                        <f:validator validatorId="Xvalid" />
+                    </h:selectOneMenu>
+                    <h:message for="inputX" class="error" />
+                    <!--                    <input type="radio" name="coor_x" value="-5" class="coor_x"/>-5-->
+<!--                    <input type="radio" name="coor_x" value="-4" class="coor_x"/>-4-->
+<!--                    <input type="radio" name="coor_x" value="-3" class="coor_x"/>-3-->
+<!--                    <input type="radio" name="coor_x" value="-2" class="coor_x"/>-2-->
+<!--                    <input type="radio" name="coor_x" value="-1" class="coor_x"/>-1-->
+<!--                    <input type="radio" name="coor_x" value="0" class="coor_x"/>0-->
+<!--                    <input type="radio" name="coor_x" value="1" class="coor_x"/>1-->
+<!--                    <input type="radio" name="coor_x" value="2" class="coor_x"/>2-->
+<!--                    <input type="radio" name="coor_x" value="3" class="coor_x"/>3-->
+                    <h4 class="form">Введите координаты Y:</h4>
+                    <h:inputText id="inputY" value="#{coordinates.coordinateY}" type="text" maxlength="5" name="coor_y" placeholder="[-5..5]" class="coor_y">
+                        <f:converter converterId="NumberConverter"/>
+                        <f:validator validatorId="Yvalid" />
+                    </h:inputText>
+                    <br />
+                    <h:message for="inputY" class="error" />
+                    <h4 class="form">Введите R:</h4>
+                    <h:inputText id="inputR" value="#{coordinates.radius}" type="text" maxlength="5" name="coor_y" placeholder="[1..4]" class="coor_y">
+                        <f:converter converterId="NumberConverter"/>
+                        <f:validator validatorId="Rvalid" />
+                    </h:inputText>
+                    <br />
+                    <h:message for="inputR" class="error" />
+                    <br/><br/>
+                    <h:commandButton action="#{process.createNewValue()}" value="Save" class="button" id="button">
+
+                    </h:commandButton>
+                    <h:form>
+                        <h:commandButton action="index" value="На стартовую">
+
+                        </h:commandButton>
+                    </h:form>
+<!--                    <input type="submit" value="Отправить" name="send" id="button"/>-->
+                </h:form>
+                <h:form id="hiddenForm">
+                    <h:inputHidden id="X" value="#{coordinates.coordinateX}"/>
+                    <h:inputHidden id="Y" value="#{coordinates.coordinateY}"/>
+                    <h:inputHidden id="R" value="#{coordinates.radius}"/>
+                    <h:commandButton id="hiddenButton" style="visibility: hidden" action="#{process.createNewValue()}">
+                    </h:commandButton>
+                </h:form>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="shapka">
+<!--                <table cellspacing="3" class="result">-->
+<!--                    <tr>-->
+<!--                        <th>Значение X</th>-->
+<!--                        <th>Значение Y</th>-->
+<!--                        <th>Значение R</th>-->
+<!--                        <th>Время начала</th>-->
+<!--                        <th>Время выполнения</th>-->
+<!--                        <th>Результат</th>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>#{coordinates.coordinateX}</td>-->
+<!--                        <td>#{coordinates.coordinateY}</td>-->
+<!--                        <td>#{coordinates.radius}</td>-->
+<!--                        <td>fds</td>-->
+<!--                        <td>fsd</td>-->
+<!--                        <td>sdf</td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+                <h:dataTable id="valueTable" value="#{process.pointsBean.pointsList}" var="point" class="result">
+                    <h:column>
+                        <f:facet name="header">Значение X</f:facet>
+                        #{point.x}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Значение Y</f:facet>
+                        #{point.y}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Значение R</f:facet>
+                        #{point.r}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Время начала</f:facet>
+                        #{point.time}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Время выполнения</f:facet>
+                        #{point.long_time}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Результат</f:facet>
+                        #{point.result}
+                    </h:column>
+                </h:dataTable>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript" src="js/valid.js"></script>
+    <script type="text/javascript" src="js/canvas.js"></script>
+</h:body>
+<!--<f:view>-->
+<!--    <h:outputLabel value="Hello, world"/>-->
+<!--</f:view>-->
+</html>
